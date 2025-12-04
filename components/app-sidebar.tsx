@@ -32,13 +32,14 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import Image from "next/image"
 
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Asif Riaj",
+    email: "asif@example.com",
+    avatar: "/asif.jpg",
   },
   teams: [
     {
@@ -59,93 +60,51 @@ const data = {
       url: "#",
       icon: Bot,
       items: [
-        {
-          title: "Employee Database",
-          url: "#",
-        },
-        {
-          title: "Add New Employee",
-          url: "#",
-        },
-        {
-          title: "Performance Report",
-          url: "#",
-        },
-        {
-          title: "Performance History",
-          url: "#",
-        },
+        { title: "Employee Database", url: "/dashboard/employees" },
+        { title: "Add New Employee", url: "/dashboard/employees/new" },
+        { title: "Performance Report", url: "/dashboard/performance" },
+        { title: "Performance History", url: "/dashboard/performance/history" },
       ],
     },
-    {
-      title: "Payroll",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      title: "Pay Slip",
-      url: "#",
-      icon: FileText,
-    },
-    {
-      title: "Attendance",
-      url: "#",
-      icon: Users,
-    },
-    {
-      title: "Request Center",
-      url: "#",
-      icon: MessageSquare,
-    },
-    {
-      title: "Career Database",
-      url: "#",
-      icon: Briefcase,
-      items: [],
-    },
-    {
-      title: "Document Manager",
-      url: "#",
-      icon: FileText,
-    },
-    {
-      title: "Notice Board",
-      url: "#",
-      icon: FileText,
-    },
-    {
-      title: "Activity Log",
-      url: "#",
-      icon: History,
-    },
-    {
-      title: "Exit Interview",
-      url: "#",
-      icon: LogOut,
-    },
-    {
-      title: "Profile",
-      url: "#",
-      icon: User,
-    },
+    { title: "Payroll", url: "/dashboard/payroll", icon: PieChart },
+    { title: "Pay Slip", url: "/dashboard/payslip", icon: FileText },
+    { title: "Attendance", url: "/dashboard/attendance", icon: Users },
+    { title: "Request Center", url: "/dashboard/requests", icon: MessageSquare },
+    { title: "Career Database", url: "/dashboard/career", icon: Briefcase },
+    { title: "Document Manager", url: "/dashboard/documents", icon: FileText },
+    { title: "Notice Board", url: "/dashboard/notice", icon: FileText },
+    { title: "Activity Log", url: "/dashboard/activity", icon: History },
+    { title: "Exit Interview", url: "/dashboard/exit-interview", icon: LogOut },
+    { title: "Profile", url: "/dashboard/profile", icon: User },
   ],
-  projects: [],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+   <SidebarHeader className="h-16 border-b">
+        <div className="flex h-full items-center justify-center px-4">
+          <Image
+            src="/logo.png"
+            alt="Nebs-IT"
+            width={140}
+            height={140}
+            className="h-25 w-30 object-contain transition-all duration-200 
+                       group-data-[collapsible=icon]:h-16 group-data-[collapsible=icon]:w-9"
+            priority
+          />
+        </div>
       </SidebarHeader>
+
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
+
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
