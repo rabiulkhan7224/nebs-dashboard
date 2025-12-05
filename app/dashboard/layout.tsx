@@ -32,14 +32,14 @@ export default function Layout({children}: {children: React.ReactNode}) {
           <div className="flex items-center gap-4">
             <SidebarTrigger />
             <Separator orientation="vertical" className="h-5" />
-            <h1 className="text-lg font-semibold">Nebs-IT Dashboard</h1>
+            <h1 className="text-lg font-semibold">well come </h1>
           </div>
 
           <Profile user={user}/>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-4 bg-accent">
           {children}
         </main>
       </SidebarInset>
