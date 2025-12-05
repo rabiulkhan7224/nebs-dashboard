@@ -23,26 +23,27 @@ export default function Layout({children}: {children: React.ReactNode}) {
     avatar: "/asif.jpg",
   }
   return (
+    <div className="container mx-auto max-w-7xl">
       <SidebarProvider>
       <AppSidebar />
 
       <SidebarInset>
         {/* Top Navbar */}
-        <header className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-6">
+        <header className="flex  h-16 shrink-0 items-center justify-between border-b bg-background px-6">
           <div className="flex items-center gap-4">
             <SidebarTrigger />
             <Separator orientation="vertical" className="h-5" />
-            <h1 className="text-lg font-semibold">well come </h1>
+            <h1 className="text-lg font-semibold hidden md:block">well come </h1>
           </div>
 
           <Profile user={user}/>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 bg-accent">
+        <main className="flex  bg-accent">
           {children}
         </main>
       </SidebarInset>
-    </SidebarProvider>
+    </SidebarProvider></div>
     );
 }
