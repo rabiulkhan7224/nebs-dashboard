@@ -23,7 +23,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
     avatar: "/asif.jpg",
   }
   return (
-    <div className="container mx-auto max-w-7xl">
+    <div className="container mx-auto max-w-7xl w-full">
       <SidebarProvider>
       <AppSidebar />
 
@@ -40,7 +40,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
         </header>
 
         {/* Main Content */}
-        <main className="flex  bg-accent">
+        <main className="flex flex-1 flex-col  bg-accent">
           {children}
         </main>
       </SidebarInset>
