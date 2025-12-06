@@ -15,9 +15,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import ForgotPasswordModal from "./auth/forgotPasswordModal";
 import { useState } from "react";
 
 type LoginFormData = {
@@ -47,9 +46,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6 w-full max-w-md", className)} {...props}>
       <Card>
         <CardHeader>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center justify-center gap-1">
             <Image src="/Logo.png" height={20} width={20} alt="logo" />
-            <h1 className="text-xl">YURUMEIN AI</h1>
+            <h1 className="text-xl">Nebs IT</h1>
           </div>
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
           <CardDescription>Log in to your wellness journey</CardDescription>
@@ -98,7 +97,8 @@ export function LoginForm({
 
               <Field>
                 <Button
-                  className="w-full text-black text-xl"
+                variant={'secondary'}
+                  className="w-full text-black  text-xl border hover:bg-white"
                   type="submit"
                   disabled={isSubmitting}
                 >
@@ -115,10 +115,10 @@ export function LoginForm({
                 <hr className="my-4" />
                 <div className="text-center text-sm text-gray-600">Or</div>
 
-                <Button variant="outline" className="w-full text-md mt-3" type="button">
+                {/* <Button variant="outline" className="w-full text-md mt-3" type="button">
                   <FcGoogle className="size-6 mr-2" />
                   Continue with Google
-                </Button>
+                </Button> */}
               </Field>
             </FieldGroup>
           </form>
@@ -126,10 +126,10 @@ export function LoginForm({
          
         </CardContent>
       </Card>
-       <ForgotPasswordModal
+       {/* <ForgotPasswordModal
         open={showForgotPassword}
         onOpenChange={setShowForgotPassword}
-      />
+      /> */}
     </div>
   );
 }
