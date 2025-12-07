@@ -1,3 +1,4 @@
+"use client"
 import { AppSidebar } from "@/components/app-sidebar"
 import { NavUser } from "@/components/nav-user";
 import { Profile } from "@/components/profile";
@@ -15,13 +16,16 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useGetMe } from "@/hooks/useGetMe";
 export default function Layout({children}: {children: React.ReactNode}) {
     
-  const user= {
-    name: "Asif Riaj",
-    email: "asif@example.com",
-    avatar: "/asif.jpg",
-  }
+  // const user= {
+  //   name: "Asif Riaj",
+  //   email: "asif@example.com",
+  //   avatar: "/asif.jpg",
+  // }
+
+  const {user,image}=useGetMe()
   return (
     <div className="container mx-auto max-w-7xl w-full">
       <SidebarProvider>
@@ -36,7 +40,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
             <h1 className="text-lg font-semibold hidden md:block">well come </h1>
           </div>
 
-          <Profile user={user}/>
+          <Profile  email={user?.email || ''} name={`${user?.firstName} ${user?.lastName}`} avatar={image}/>
         </header>
 
         {/* Main Content */}

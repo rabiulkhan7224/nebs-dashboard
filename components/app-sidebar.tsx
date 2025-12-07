@@ -33,6 +33,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Image from "next/image"
+import { useGetMe } from "@/hooks/useGetMe"
+import Link from "next/link"
 
 // This is sample data.
 const data = {
@@ -80,10 +82,13 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const{user,image}=useGetMe()
+  
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
    <SidebarHeader className="h-16 border-b">
         <div className="flex h-full items-center justify-center px-4">
+         <Link href={'/'}>
           <Image
             src="/logo.png"
             alt="Nebs-IT"
@@ -92,7 +97,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             className="h-25 w-30 object-contain transition-all duration-200 
                        group-data-[collapsible=icon]:h-16 group-data-[collapsible=icon]:w-9"
             priority
-          />
+          /></Link>
         </div>
       </SidebarHeader>
 
@@ -101,7 +106,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser email={user?.email || ''} name={`${user?.firstName} ${user?.lastName}`} avatar={image}/>
       </SidebarFooter>
 
       <SidebarRail />

@@ -1,9 +1,11 @@
 "use client";
 
 import { LoginForm } from "@/components/login-form";
-import { loginAction } from "@/lib/auth/actions";
+import { setAuthCookies } from "@/lib/auth/cookies";
+
 import { loginSchema } from "@/lib/validation/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -30,18 +32,15 @@ export default function LoginPage() {
     console.log("Login data:", data);
 try {
 
-    const res = await loginAction(data);
+  const res = await axios.post("https://nebs-backend.vercel.app/v1/api/auth/login", data)
     console.log("Login response:", res);
-    if (res?.success) {
+    if (res.data.success) {                               
       // set token
-       localStorage.setItem("token",res.data.accessToken)  
-
-      // prefer role from response; fallback to 'user'
-      const respRole = res.data?.role || res.data?.data?.role;
-      const role = respRole === 'USER' || respRole === 'user' ? 'user' : respRole === 'ADMIN' || respRole === 'admin' ? 'admin' : 'user';
-      const destination = role === 'admin' ? '/dashboard/admin/user-management' : '/dashboard/user/ai-chatbot';
-      toast.success('Login successful!');
-      router.replace(destination);
+       localStorage.setItem("token",res?.data?.data?.accessToken)  
+        await  setAuthCookies(res?.data?.data?.accessToken)
+        toast.success("Login successful")
+        router.push("/dashboard")
+      
     } else {
       toast.error('Login failed.');
     }

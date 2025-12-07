@@ -1,10 +1,10 @@
 "use server";
 import { cookies } from "next/headers";
 
-const ACCESS_TOKEN = "access_token";
-const REFRESH_TOKEN = "refresh_token";
+const ACCESS_TOKEN = "accessToken";
+const REFRESH_TOKEN = "refreshToken";
 
-export async function setAuthCookies(access: string, refresh: string, role?: string) {
+export async function setAuthCookies(access: string, refresh?: string, role?: string) {
   const cookieStore = await cookies();
   // set access / refresh tokens
   cookieStore.set(ACCESS_TOKEN, access, {
@@ -14,13 +14,16 @@ export async function setAuthCookies(access: string, refresh: string, role?: str
     path: "/",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   });
-  cookieStore.set(REFRESH_TOKEN, refresh, {
+  if(refresh){
+   cookieStore.set(REFRESH_TOKEN, refresh, {
     httpOnly: true,
      secure: false,                 // ❗ MUST be false on VPS without HTTPS
     sameSite: "lax",
     path: "/",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   });
+  }
+  
   // optionally store a small non-httpOnly role cookie so middleware can read it
   if (role) {
     cookieStore.set('user_role', role, {
