@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NEBS Dashboard 🚀
 
-## Getting Started
+A modern admin dashboard built with Next.js, TypeScript, and Tailwind CSS. It provides authentication, project/team switching, notice management, file uploads, and a responsive UI using Radix + custom components.
 
-First, run the development server:
+---
+
+## Demo & Docs
+
+- **Live demo:** https://nebs-dashboard.vercel.app (replace with your deployment URL)
+- **Docs / Additional docs:** https://github.com/<your-username>/nebs-dashboard/tree/main/docs (replace with your docs or wiki link)
+
+---
+
+## Tech Stack 🔧
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **UI:** Tailwind CSS, Radix UI primitives, Lucide icons
+- **Data fetching:** SWR, Axios
+- **Forms & validation:** react-hook-form, Zod
+- **Auth:** Cookie-based tokens (server cookies)
+- **Deployment:** Vercel (recommended)
+
+---
+
+## Key Features ✅
+
+- Authentication: Login and Sign-up flows
+- Dashboard with project/team switching
+- Notice management (create/edit/delete notices)
+- File upload support (via `FileUpload` component)
+- User profile pages and settings
+- Reusable UI primitives and components in `components/ui` (Avatar, Dialog, Popover, Table, etc.)
+- Responsive layout and accessible components
+- Client/server interactions via `lib/auth` and `axios-instance`
+
+---
+
+## Getting started
+
+1. Install dependencies
+
+```bash
+npm install
+# or
+pnpm install
+```
+
+2. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Build for production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Environment variables (.env.example) 🔐
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a `.env.local` file in the project root and copy the variables below. Update values for your environment.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+# Base URL for the backend API used by axios (update if you use a different endpoint)
+NEXT_PUBLIC_API_URL=https://nebs-backend.vercel.app/v1/api
 
-## Deploy on Vercel
+# Base URL for the frontend (used for absolute links)
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Optional: replace with your analytics / feature flags / other keys
+NEXT_PUBLIC_ANALYTICS_ID=
+NEXT_PUBLIC_SENTRY_DSN=
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# If you deploy to Vercel you may use VERCEL_* env vars and set secrets there
+```
+
+> Note: The code currently uses a hard-coded API base URL in `lib/auth/axios-instance.ts`. If you prefer, replace the `baseURL` with `process.env.NEXT_PUBLIC_API_URL` and restart the dev server.
+
+---
+
+## Contributing 🤝
+
+Contributions are welcome! Open issues for bugs or feature requests and submit pull requests for fixes.
+
+---
+
+## License
+
+MIT — feel free to change to your preferred license.
+
+---
+
+If you'd like, I can add a `docs/` folder with usage guides for components and API examples, or update the README with your real live URL and docs link — tell me what links to use and I'll update it.
