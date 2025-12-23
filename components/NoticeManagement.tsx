@@ -99,7 +99,7 @@ const [filters, setFilters] = useState({
 });
  const queryString = buildQuery(filters, page, 10);
 
-const { data, error, isLoading } = useSWR(
+const { data, error, isLoading, mutate:dataMutate } = useSWR(
   `https://nebs-backend.vercel.app/v1/api/notice?${queryString}`,
   fetcher,
   { revalidateOnFocus: false }
@@ -145,8 +145,8 @@ useEffect(() => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-mutate(`https://nebs-backend.vercel.app/v1/api/notice?${queryString}`);   
-   toast.success("Notice deleted");
+      dataMutate();
+      toast.success("Notice deleted");
     } catch (err) {
       toast.error("Delete failed");
     }
@@ -495,6 +495,11 @@ mutate(`https://nebs-backend.vercel.app/v1/api/notice?${queryString}`);
           )}
         </DialogContent>
       </Dialog>
+          
+
+
+
+
     </div>
   );
 }

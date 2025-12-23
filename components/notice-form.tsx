@@ -41,10 +41,11 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { cn, uploadToCloudinary } from "@/lib/utils";
+import { cn, uploadToCloudinary, } from "@/lib/utils";
 import { FileUpload } from "./FileUpload";
 import Image from "next/image";
 import Link from "next/link";
+import { uploadToVercelBlob } from "@/lib/auth/upload";
 
 const noticeTypeOptions = [
   "Warning / Disciplinary",
@@ -73,7 +74,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function NoticeForm() {
-  const [openSuccess, setOpenSuccess] = useState(true);
+  const [openSuccess, setOpenSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [attachment, setAttachment] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
@@ -134,8 +135,9 @@ export default function NoticeForm() {
     try {
       let attachmentUrl = "";
       if (attachment) {
-        attachmentUrl = await uploadToCloudinary(attachment);
-        
+        // attachmentUrl = await uploadToCloudinary(attachment);
+        const url = await uploadToVercelBlob(attachment);
+        attachmentUrl = url;
       }
 
       const payload: any = {
@@ -156,8 +158,7 @@ export default function NoticeForm() {
         payload.department = data.department; // ← Now sent correctly
       }
 
-      await axios.post(
-        "https://nebs-backend.vercel.app/v1/api/notice",
+      await axios.post("https://nebs-backend.vercel.app/v1/api/notice",
         payload,
         {
           headers: {
@@ -172,6 +173,7 @@ export default function NoticeForm() {
       reset();
       setAttachment(null);
     } catch (error: any) {
+      console.log(error);
       toast.error(error.response?.data?.error?.[0]?.message || "Failed to publish notice");
     } finally {
       setIsSubmitting(false);
@@ -295,7 +297,7 @@ export default function NoticeForm() {
 
             {/* Notice Type & Date */}
             <div className="grid gap-6 md:grid-cols-3">
-              <div>
+              <div className="">
                 <Label> <span className="text-rose-500">*</span> Notice Type </Label>
                 <Controller
                   name="noticeType"
@@ -312,12 +314,12 @@ export default function NoticeForm() {
                           <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full p-0">
+                      <PopoverContent className="max-w-sm p-0">
                         <Command>
                           <CommandInput placeholder="Search..." />
                           <CommandList>
                             <CommandEmpty>No results</CommandEmpty>
-                            <CommandGroup>
+                            <CommandGroup className="">
                               {noticeTypeOptions.map((type) => (
                                 <CommandItem
                                   key={type}
