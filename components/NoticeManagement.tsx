@@ -385,15 +385,15 @@ useEffect(() => {
                     >
                       <Eye className="h-4 w-4" />
                     </Button>
-                    <Button
+                    {/* <Button
                       variant="ghost"
                       size="icon"
                      
                     >
-                      {/* edit */}
+                   
                       <Edit className="h-4 w-4" />
                       
-                    </Button>
+                    </Button> */}
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

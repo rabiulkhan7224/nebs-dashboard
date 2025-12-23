@@ -39,16 +39,16 @@ export function LoginForm({
   isSubmitting,
   ...props
 }: LoginFormProps) {
-
-
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   return (
-    <div className={cn("flex flex-col gap-6 w-full max-w-md", className)} {...props}>
+    <div
+      className={cn("flex flex-col gap-6 w-full max-w-md", className)}
+      {...props}
+    >
       <Card>
         <CardHeader>
           <div className="flex items-center justify-center gap-1">
             <Image src="/Logo.png" height={40} width={160} alt="logo" />
-            
           </div>
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
           <CardDescription>Log in to your wellness journey</CardDescription>
@@ -67,7 +67,9 @@ export function LoginForm({
                   disabled={isSubmitting}
                 />
                 {errors.email && (
-                  <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </Field>
 
@@ -75,13 +77,13 @@ export function LoginForm({
                 <div className="flex items-center justify-between">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <Button
-            type="button"
-            variant="link"
-            className="text-sm p-0 h-auto"
-            onClick={() => setShowForgotPassword(true)}
-          >
-            Forgot password?
-          </Button>
+                    type="button"
+                    variant="link"
+                    className="text-sm p-0 h-auto"
+                    onClick={() => setShowForgotPassword(true)}
+                  >
+                    Forgot password?
+                  </Button>
                 </div>
                 <Input
                   {...register("password")}
@@ -91,14 +93,16 @@ export function LoginForm({
                   disabled={isSubmitting}
                 />
                 {errors.password && (
-                  <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </Field>
 
               <Field>
                 <Button
-                variant={'secondary'}
-                  className="w-full text-black  text-xl border hover:bg-white"
+                  variant={"secondary"}
+                  className="w-full bg-orange-500/80 text-black  text-xl border hover:bg-white"
                   type="submit"
                   disabled={isSubmitting}
                 >
@@ -112,8 +116,8 @@ export function LoginForm({
                   </a>
                 </FieldDescription>
 
-                <hr className="my-4" />
-                <div className="text-center text-sm text-gray-600">Or</div>
+                <hr className="my-2" />
+               
 
                 {/* <Button variant="outline" className="w-full text-md mt-3" type="button">
                   <FcGoogle className="size-6 mr-2" />
@@ -122,11 +126,18 @@ export function LoginForm({
               </Field>
             </FieldGroup>
           </form>
-
-         
+          {/* hr email and password for test */}
+          <div
+            className="mt-4 space-y-1
+            bg-gray-50 p-4 rounded-md border border-gray-200"
+          >
+            <p className="text-sm text-gray-500"><strong>Test Credentials HR:</strong></p>
+            <p className="text-sm text-gray-500">Email:<strong> mohin@gmail.com</strong></p>
+            <p className="text-sm text-gray-500">Password: <strong>12346As#</strong></p>
+          </div>
         </CardContent>
       </Card>
-       {/* <ForgotPasswordModal
+      {/* <ForgotPasswordModal
         open={showForgotPassword}
         onOpenChange={setShowForgotPassword}
       /> */}

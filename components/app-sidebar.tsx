@@ -90,13 +90,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <div className="flex h-full items-center justify-center px-4">
          <Link href={'/'}>
           <Image
-            src="/logo.png"
+            src="/Logo.png"
             alt="Nebs-IT"
             width={160}
             height={40}
-            className="h-25 w-30 object-contain transition-all duration-200 
-                       group-data-[collapsible=icon]:h-16 group-data-[collapsible=icon]:w-9"
-            priority
+            className="h-25 w-30 object-contain transition-all duration-200 group-data-[collapsible=icon]:h-16 group-data-[collapsible=icon]:w-9 "
+            // 
+          
           /></Link>
         </div>
       </SidebarHeader>

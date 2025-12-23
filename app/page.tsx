@@ -1,3 +1,46 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useGetMe } from '@/hooks/useGetMe';
+
+const HomePage = () => {
+  const { user, image, isLoading } = useGetMe(); // assuming isLoading is returned
+  const router = useRouter();
+
+  useEffect(() => {
+    // Only redirect after loading is complete
+    if (!isLoading) {
+      if (user) {
+        router.push('/dashboard');
+      } else {
+        router.push('/login');
+      }
+    }
+  }, [user, isLoading, router]);
+
+  // Show loading UI while checking auth status
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // During redirect, you can show a minimal fallback (optional)
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <p>Redirecting...</p>
+    </div>
+  );
+};
+
+export default HomePage;
+
 
 // import Link from "next/link";
 // import { Button } from "@/components/ui/button";
@@ -128,46 +171,3 @@
 //   );
 // }
 // --- IGNORE ---
-
-'use client';
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useGetMe } from '@/hooks/useGetMe';
-
-const HomePage = () => {
-  const { user, image, isLoading } = useGetMe(); // assuming isLoading is returned
-  const router = useRouter();
-
-  useEffect(() => {
-    // Only redirect after loading is complete
-    if (!isLoading) {
-      if (user) {
-        router.push('/dashboard');
-      } else {
-        router.push('/login');
-      }
-    }
-  }, [user, isLoading, router]);
-
-  // Show loading UI while checking auth status
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // During redirect, you can show a minimal fallback (optional)
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <p>Redirecting...</p>
-    </div>
-  );
-};
-
-export default HomePage;
