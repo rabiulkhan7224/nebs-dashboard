@@ -6,9 +6,8 @@ A modern admin dashboard built with Next.js, TypeScript, and Tailwind CSS. It pr
 
 ## Demo & Docs
 
-- **Live demo:** https://nebs-dashboard.vercel.app (replace with your deployment URL)
-- **Docs / Additional docs:** https://github.com/<your-username>/nebs-dashboard/tree/main/docs (replace with your docs or wiki link)
-
+- **Live demo:** https://nebs-dashboard-sigma.vercel.app 
+- **Docs / Additional docs:** https://docs.google.com/document/d/1wR0wTP0IMmz-7Dz-jkkNvfz_wTQ8CNqyv99M1EvTfoc/edit?usp=sharing
 ---
 
 ## Tech Stack 🔧
