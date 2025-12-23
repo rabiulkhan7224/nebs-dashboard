@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { ArrowLeft, Check, ChevronsUpDown, } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -43,6 +43,8 @@ import {
 } from "@/components/ui/command";
 import { cn, uploadToCloudinary } from "@/lib/utils";
 import { FileUpload } from "./FileUpload";
+import Image from "next/image";
+import Link from "next/link";
 
 const noticeTypeOptions = [
   "Warning / Disciplinary",
@@ -71,7 +73,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function NoticeForm() {
-  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [attachment, setAttachment] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
@@ -133,6 +135,7 @@ export default function NoticeForm() {
       let attachmentUrl = "";
       if (attachment) {
         attachmentUrl = await uploadToCloudinary(attachment);
+        
       }
 
       const payload: any = {
@@ -180,7 +183,14 @@ export default function NoticeForm() {
       <Card className="border-0 shadow-none">
         <div className="space-y-8 p-6">
           <div className="border-b pb-4">
-            <h2 className="text-lg font-semibold">Create a Notice</h2>
+            <div className="">
+              {/* back dashboard */}
+              <Button variant="ghost" size="sm" className="px-0 mb-2" onClick={() => window.history.back()}>
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                <h2 className="text-lg font-semibold">Create a Notice</h2>
+              </Button>
+            </div>
+            
             <p className="text-sm text-muted-foreground">
               Please fill in the details below
             </p>
@@ -189,10 +199,10 @@ export default function NoticeForm() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             {/* Target & Title */}
             <div className="grid gap-6 md:grid-cols-3">
-              <div>
-                <Label>Target</Label>
+              <div className="md:col-span-3 border  p-8 rounded-lg bg-gray-50">
+                <Label><span className="text-rose-500">*</span>Target Department(s) or Individual</Label>
                 <Select defaultValue="individual" onValueChange={(v) => setValue("target", v as any)}>
-                  <SelectTrigger className="mt-2">
+                  <SelectTrigger className="mt-2 text-blue-400">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -203,8 +213,8 @@ export default function NoticeForm() {
                 </Select>
               </div>
 
-              <div className="md:col-span-2">
-                <Label>Notice Title <span className="text-rose-500">*</span></Label>
+              <div className="md:col-span-3">
+                <Label><span className="text-rose-500">*</span>Notice Title </Label>
                 <Input {...register("title")} placeholder="Write the Title of Notice" className="mt-2" />
                 {errors.title && <p className="mt-1 text-xs text-red-500">{errors.title.message}</p>}
               </div>
@@ -212,9 +222,9 @@ export default function NoticeForm() {
 
             {/* Individual */}
             {target === "individual" && (
-              <div className="grid gap-6 md:grid-cols-2">
+              <div className="grid gap-6 md:grid-cols-2 border p-6 rounded-lg bg-gray-50">
                 <div>
-                  <Label>Employee <span className="text-rose-500">*</span></Label>
+                  <Label><span className="text-rose-500">*</span>Employee </Label>
                   <Select
                     disabled={loadingEmployees}
                     onValueChange={(value) => {
@@ -234,13 +244,13 @@ export default function NoticeForm() {
                         return (
                           <SelectItem key={emp._id} value={emp._id}>
                             <div className="flex items-center gap-3">
-                              {emp.profilePicture ? (
+                              {/* {emp.profilePicture ? (
                                 <img src={emp.profilePicture} alt="" className="w-8 h-8 rounded-full" />
                               ) : (
                                 <div className="w-8 h-8 rounded-full bg-rose-500 flex-center text-white">
                                   {name[0]?.toUpperCase()}
                                 </div>
-                              )}
+                              )} */}
                               <div>
                                 <div className="font-medium">{name}</div>
                                 {emp.employeeId && (
@@ -264,10 +274,10 @@ export default function NoticeForm() {
 
             {/* Department */}
             {target === "department" && (
-              <div>
-                <Label>Department <span className="text-rose-500">*</span></Label>
+              <div className="md:col-span-2 border p-6 rounded-lg bg-gray-50">
+                <Label> <span className="text-rose-500">*</span> Department </Label>
                 <Select onValueChange={(v) => setValue("department", v)}>
-                  <SelectTrigger className="mt-2">
+                  <SelectTrigger className="mt-2 text-black">
                     <SelectValue placeholder="Select department" />
                   </SelectTrigger>
                   <SelectContent>
@@ -286,7 +296,7 @@ export default function NoticeForm() {
             {/* Notice Type & Date */}
             <div className="grid gap-6 md:grid-cols-3">
               <div>
-                <Label>Notice Type <span className="text-rose-500">*</span></Label>
+                <Label> <span className="text-rose-500">*</span> Notice Type </Label>
                 <Controller
                   name="noticeType"
                   control={control}
@@ -297,7 +307,7 @@ export default function NoticeForm() {
                           {field.value.length > 0 ? (
                             field.value.map((t) => <Badge key={t} variant="secondary">{t}</Badge>)
                           ) : (
-                            <span className="text-muted">Select type</span>
+                            <span className="text-black">Select type</span>
                           )}
                           <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
                         </Button>
@@ -334,7 +344,7 @@ export default function NoticeForm() {
               </div>
 
               <div className="md:col-span-2">
-                <Label>Publish Date <span className="text-rose-500">*</span></Label>
+                <Label> <span className="text-rose-500">*</span>Publish Date </Label>
                 <Input {...register("publishDate")} type="date" className="mt-2" />
                 {errors.publishDate && <p className="mt-1 text-xs text-red-500">{errors.publishDate.message}</p>}
               </div>
@@ -356,7 +366,7 @@ export default function NoticeForm() {
               <Button type="button" variant="secondary">
                 Save as Draft
               </Button>
-              <Button type="submit" disabled={isSubmitting} className="bg-rose-600 hover:bg-rose-700">
+              <Button type="submit" disabled={isSubmitting} className="bg-orange-600 hover:bg-orange-700">
                 {isSubmitting ? "Publishing..." : "Publish Notice"}
               </Button>
             </div>
@@ -370,7 +380,7 @@ export default function NoticeForm() {
 
       {/* Success Icon */}
       <div className="mx-auto w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
-        <Check className="w-10 h-10 text-green-600" />
+        <Image src="/sucessfull.png" width={40} height={40} alt="Success" className="w-10 h-10" />
       </div>
 
       {/* Title */}
@@ -384,16 +394,22 @@ export default function NoticeForm() {
       </p>
 
       {/* Buttons */}
-      <div className="mt-8 flex flex-col gap-3">
-        <Button variant="outline" className="w-full" onClick={() => setOpenSuccess(false)}>
-          View
+      <div className="mt-8 flex items-center justify-between gap-3">
+        <Button variant="outline" className="" >
+          <Link href="/dashboard">
+          View Notices
+          </Link>
         </Button>
 
-        <Button className="w-full" onClick={() => setOpenSuccess(false)}>
+        <Button className="bg-orange-500" variant={"default"}   onClick={() => {
+          setOpenSuccess(false);
+          reset();
+          
+        }}>
           Create Another
         </Button>
 
-        <Button variant="ghost" className="w-full" onClick={() => setOpenSuccess(false)}>
+        <Button variant="ghost" className="" onClick={() => setOpenSuccess(false)}>
           Close
         </Button>
       </div>

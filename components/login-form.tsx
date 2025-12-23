@@ -47,8 +47,8 @@ export function LoginForm({
       <Card>
         <CardHeader>
           <div className="flex items-center justify-center gap-1">
-            <Image src="/Logo.png" height={20} width={20} alt="logo" />
-            <h1 className="text-xl">Nebs IT</h1>
+            <Image src="/Logo.png" height={40} width={160} alt="logo" />
+            
           </div>
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
           <CardDescription>Log in to your wellness journey</CardDescription>
